@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Setup apt-get for the package installation of the .NET Core
+    copy: dest=/etc/apt/sources.list.d/dotnetdev.list owner=root
+      content="deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main"
+  - name: Install cryptographic keys
+    shell: apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - name: Update Ubuntu sources
+    apt: update_cache=yes
+  - name: Install Dependencies
+    apt: name={{ item }} state=present
+    with_items:
+      - libstdc++6    # C++ Runtime
+      - mono-runtime  # Mono (Open source Dot Net framework)
+      - dotnet-sharedframework-microsoft.netcore.app-1.0.0 # Dot Net Dependencies
+  - name: Install Dot Net
+    apt: name=dotnet-dev-1.0.0-preview2-003121 state=present
