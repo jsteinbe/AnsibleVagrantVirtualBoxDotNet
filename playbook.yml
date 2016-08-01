@@ -18,9 +18,10 @@
     apt: name=dotnet-dev-1.0.0-preview2-003121 state=present
   - name: Create Web Application directory
     file: path=/home/vagrant/WebApplication state=directory
-  - unarchive: src=WebSite/WebApplication.tar.xz dest=/home/vagrant/
+  - unarchive: src=WebSite/WebApplication.tar.gz dest=/home/vagrant/
   - name: Add all dotnet application dependencies
     shell: dotnet restore
+    become_user: vagrant
     args:
-      chdir: /home/vagrant/WebApplication/
+      chdir: /home/vagrant/WebApplication1/src/WebApplication1
       creates: project.lock.json
