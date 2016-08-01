@@ -7,9 +7,9 @@ This is a Vagrant Box that uses Ansible to install ASP Core onto a Ubuntu Linux 
 a self-hosting test box for a MVC5/ASP Core to see how well ASP Core works under this new environment and to allow
 development.
 
-The server will be setup to host a very simple MVC ASP Core application. The application has a simple Controller
-and View. The simple application that is installed will need to be run as you develop (see Improvements below). To
-start you can run the following:
+The server is setup to host a very simple MVC ASP Core application taken from Windows/Visual Studio 2015. The
+application has a simple Controller and View. The simple application that is installed will need to be run as you
+develop (see Improvements below).
 
 ## Why?
 
@@ -27,19 +27,17 @@ You will want to download the Vagrant box via:
 host$ vagrant up
 ```
 
-That will download the ~440 MB box (which can take a while). You can then provision it with:
-
-```shell
-host$ vagrant provision
-```
+That will download the ~440 MB box (which can take a while). This will also provision the box.
 
 After that you are ready to run the application. Simply:
 
 ```shell
 host$ vagrant ssh         # Login to Vagrant box
-guest$ cd WebApplication  # Go into Web Application Directory
-guest$ dotnet run         # Run!
+guest$ runapp             # Change to Application Directory and Run!
 ```
+
+Additionally you can use the `goapp` command to go into the source directory. `dotnet run` is the traditional
+way to run the application however for convenience `runapp` will do the same thing.
 
 To the host, the application will be available at http://localhost:8000 .
 

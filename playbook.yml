@@ -16,9 +16,15 @@
       - dotnet-sharedframework-microsoft.netcore.app-1.0.0 # Dot Net Dependencies
   - name: Install Dot Net
     apt: name=dotnet-dev-1.0.0-preview2-003121 state=present
-  - name: Create Web Application directory
-    file: path=/home/vagrant/WebApplication state=directory
-  - unarchive: src=WebSite/WebApplication.tar.gz dest=/home/vagrant/
+  - name: Add aliases for easier navigation/running
+    lineinfile:
+      dest=/home/vagrant/.bashrc
+      line={{ item }}
+    with_items:
+      - alias goapp="cd /home/vagrant/WebApplication1/src/WebApplication1"
+      - alias runapp="goapp && dotnet run"
+  - name: Add WebApplication1
+    unarchive: src=WebSite/WebApplication.tar.gz dest=/home/vagrant/
   - name: Add all dotnet application dependencies
     shell: dotnet restore
     become_user: vagrant
