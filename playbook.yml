@@ -12,8 +12,15 @@
   - name: Install Dependencies
     apt: name={{ item }} state=present
     with_items:
-      - libstdc++6    # C++ Runtime
       - mono-runtime  # Mono (Open source Dot Net framework)
       - dotnet-sharedframework-microsoft.netcore.app-1.0.0 # Dot Net Dependencies
   - name: Install Dot Net
     apt: name=dotnet-dev-1.0.0-preview2-003121 state=present
+  - name: Create Web Application directory
+    file: path=/home/vagrant/WebApplication state=directory
+  - unarchive: src=WebSite/WebApplication.tar.xz dest=/home/vagrant/
+  - name: Add all dotnet application dependencies
+    shell: dotnet restore
+    args:
+      chdir: /home/vagrant/WebApplication/
+      creates: project.lock.json

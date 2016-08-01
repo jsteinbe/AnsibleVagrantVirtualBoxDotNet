@@ -23,4 +23,7 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbook.yml"
   end
 
+  # Forward the port from the guest to be used on the host
+  config.vm.network "forwarded_port", guest: 5000, host: 8000
+
 end
